@@ -25,7 +25,25 @@ router.get("/", async (req, res) => {
 router.post("/", checkForVals, async (req, res) => {
   try {
     const newAction = await db.insert(req.body);
-    res.status(200).json(newAction);
+    res.status(201).json(newAction);
+  } catch (e) {
+    res.status(500).json({ error: "I am so sorry :(" });
+  }
+});
+
+router.put("/:id", checkForVals, async (req, res) => {
+  try {
+    const updatedAction = await db.update(req.params.id, req.body);
+    res.status(201).json(updatedAction);
+  } catch (e) {
+    res.status(500).json({ error: "I am so sorry :(" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedAction = await db.remove(req.params.id);
+    res.status(200).json(deletedAction);
   } catch (e) {
     res.status(500).json({ error: "I am so sorry :(" });
   }
