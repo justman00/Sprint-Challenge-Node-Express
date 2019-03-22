@@ -22,6 +22,15 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id/actions", async (req, res) => {
+  try {
+    const allActions = await db.getProjectActions(req.params.id);
+    res.status(200).json(allActions);
+  } catch (e) {
+    res.status(500).json({ error: "I am so sorry :(" });
+  }
+});
+
 router.post("/", checkForVals, async (req, res) => {
   try {
     const newAction = await db.insert(req.body);
